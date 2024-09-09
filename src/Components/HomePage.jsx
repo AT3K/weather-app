@@ -1,18 +1,18 @@
-import React from 'react';
-import ApiAxios from './ApiAxios';
-import HeroSection from './heroSection';
-import DrawerAppBar from './Navbar';
+import React, { useState } from 'react';
 import Search from './Search';
+import ApiAxios from './ApiAxios';
+import DailyData from './DailyData';
 
-function Weather() {
+function HomePage() {
+    const [selectedLocation, setSelectedLocation] = useState(null);
+
     return (
         <div>
-            <DrawerAppBar/>
-            <Search/>
-            {/* <HeroSection /> */}
-            <ApiAxios />
+            <Search setSelectedLocation={setSelectedLocation} />
+            <ApiAxios selectedLocation={selectedLocation} />
+            <DailyData selectedLocation={selectedLocation}/>
         </div>
     );
 }
 
-export default Weather;
+export default HomePage;
