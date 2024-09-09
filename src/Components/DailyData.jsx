@@ -37,7 +37,7 @@ function DailyData({ selectedLocation }) {
             gap: 1,
             padding: 1,
             border: 1,
-            borderRadius: 4,
+            borderRadius: 2,
             margin: 1,
             bgcolor: "#2a0592",
             color: 'white',
@@ -47,15 +47,15 @@ function DailyData({ selectedLocation }) {
         >
           {forecast.forecast.forecastday[0] && (
             forecast.forecast.forecastday[0].hour.map((hourData, index) => (
-              <Box key={index} sx={{ minWidth: 100, padding: 1 }}>
+              <Box key={index} sx={{ minWidth: 100, padding: 1, textAlign: 'center' }}>
                 <Typography variant="body2">
                   {hourData.time.split(' ')[1]}
                 </Typography>
-                <Typography gutterBottom sx={{ fontSize: 15 }}>
+                <Typography gutterBottom sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <img
                     src={hourData.condition.icon}
                     alt="Weather Icon"
-                    style={{ width: 30, height: 30 }}
+                    style={{ width: 50, height: 50 }}
                   />
                 </Typography>
                 <Typography variant="body2">
