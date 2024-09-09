@@ -1,73 +1,87 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import img from '../assets/img/herosection.jpg';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-function ApiAxios() {
+function ApiAxios({ selectedLocation }) {
     const [weather, setWeather] = useState(null);
+    const [forecast, setForecast] = useState(null);
     const [error, setError] = useState(null);
-
     useEffect(() => {
         const apiKey = '097eeeb342d8477aa69224048240209';
-        const location = 'iraq';
+        const location = selectedLocation || 'iraq';
 
-        axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`)
-            .then((res) => {
-                setWeather(res.data);
-                console.log(res.data);
-            })
-            .catch((err) => {
-                setError('Error fetching weather data');
-                console.error(err);
-            });
-    }, []);
+        axios.all([
+            axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`),
+            axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=10`),
+        ])
+        .then(axios.spread((currentRes, forecastRes) => {
+            setWeather(currentRes.data);
+            setForecast(forecastRes.data);
+        }))
+        .catch((err) => {
+            setError('Error fetching weather data');
+            console.error(err);
+        });
+    }, [selectedLocation]);
 
     return (
-        <div>
-            <div
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '500px', // Explicit height for container
-                    zIndex: -1,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: 80,
-                    overflow: 'hidden'
-                }}
-            >
-                <img
-                    src={img}
-                    alt='house'
-                    style={{
-                        width: '90%',
-                        height: '80%',
-                        objectFit: 'cover',
-                        borderRadius: 20
-                    }}
-                />
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
             {error && <p>{error}</p>}
-            {weather ? (
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontFamily: 800,
-                    textAlign: 'center'
-                }}>
-                    <div>
-                        <h1> {weather.location.name}</h1>
-                        {/* <h1>{weather.location.localtime}</h1> */}
-                        <h1>{weather.current.temp_c}°C</h1>
-                        <p> {weather.current.condition.text} </p>
-                        <img src={weather.current.condition.icon} alt="Weather Icon" />
-                        {/* <p>{weather.current.last_updated}</p> */}
-                    </div>
-                </div>
+            {weather && forecast ? (
+                <>
+                    <Box sx={{ minWidth: 275, marginBottom: 2, textAlign: 'center' }}>
+                        <CardContent>
+                            <Typography gutterBottom sx={{ fontSize: 20, fontWeight: 'bold' }}>
+                                {weather.location.name} <LocationOnIcon sx={{ fontSize: 20 }} />
+                            </Typography>
+                            <Typography variant="h3" component="div" sx={{ display: 'flex', justifyContent: 'center' }}>
+                                {Math.round(weather.current.temp_c)}
+                                <span style={{ fontSize: 20, marginTop: 4 }}>°C</span>
+                            </Typography>
+                            {forecast.forecast.forecastday[0] && (
+                                <Typography variant="body2">
+                                    {Math.round(forecast.forecast.forecastday[0].day.maxtemp_c)}
+                                    /
+                                    {Math.round(forecast.forecast.forecastday[0].day.mintemp_c)}°C
+                                </Typography>
+                            )}
+                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                {weather.current.condition.text}
+                            </Typography>
+                        </CardContent>
+                    </Box>
+
+                    {/* <Box sx={{ minWidth: 275 }}>
+                        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
+                            10-Day Forecast
+                        </Typography>
+                        {forecast.forecast.forecastday.map((day, index) => (
+                            <Card key={index} variant="outlined" sx={{ marginBottom: 1 }}>
+                                <CardContent>
+                                    <Typography gutterBottom sx={{ fontSize: 15 }}>
+                                        {day.date}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        Max Temp: {Math.round(day.day.maxtemp_c)}°C
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        Min Temp: {Math.round(day.day.mintemp_c)}°C
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        Condition: {day.day.condition.text}
+                                        <img src={day.day.condition.icon} alt="Weather Icon" />
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </Box> */}
+                </>
             ) : (
-                <p>Loading weather data...</p>
+                <p>No weather data available.</p>
             )}
         </div>
     );
