@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Search from './Search';
 import ApiAxios from './ApiAxios';
 import DailyData from './DailyData';
+import WeeklyData from './WeeklyData';
 
 function HomePage() {
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -11,6 +12,8 @@ function HomePage() {
             <Search setSelectedLocation={setSelectedLocation} />
             <ApiAxios selectedLocation={selectedLocation} />
             <DailyData selectedLocation={selectedLocation}/>
+            <WeeklyData selectedLocation={selectedLocation}/>
+
         </div>
     );
 }
