@@ -3,6 +3,7 @@ import Search from './Search';
 import ApiAxios from './ApiAxios';
 import DailyData from './DailyData';
 import WeeklyData from './WeeklyData';
+import MoreData from './MoreData';
 
 function HomePage() {
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -13,6 +14,7 @@ function HomePage() {
             <ApiAxios selectedLocation={selectedLocation} />
             <DailyData selectedLocation={selectedLocation}/>
             <WeeklyData selectedLocation={selectedLocation}/>
+            <MoreData selectedLocation={selectedLocation}/>
 
         </div>
     );
