@@ -38,7 +38,7 @@ function DailyData({ selectedLocation }) {
             padding: 1,
             border: 1,
             borderRadius: 2,
-            margin: 1,
+            margin: {xs:2,md:5},
             bgcolor: "#2a0592",
             color: 'white',
             scrollBehavior: 'smooth'

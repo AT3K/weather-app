@@ -36,58 +36,13 @@ function WeeklyData({ selectedLocation }) {
     if (!forecast) {
         return <p>Loading weather data...</p>;
     }
-
-    // Data for temperature lines
-    const maxTemps = forecast.forecast.forecastday.map(day => Math.round(day.day.maxtemp_c));
-    const minTemps = forecast.forecast.forecastday.map(day => Math.round(day.day.mintemp_c));
-
-    // Calculate the X coordinates for the line
-    const cardWidth = 150;
-    const spacing = 20;
-    const xCoordinates = forecast.forecast.forecastday.map((_, index) => index * (cardWidth + spacing) + (cardWidth / 2));
-
-    // Handle scroll position and calculate line positions
     const handleScroll = () => {
         const scrollPosition = scrollableRef.current.scrollLeft;
-        const svg = document.getElementById('temperature-lines');
-        svg.style.left = `-${scrollPosition}px`;
     };
 
     return (
         <div style={{ position: 'relative', overflow: 'hidden' }}>
-            <svg
-                id="temperature-lines"
-                height="200"
-                width={xCoordinates[xCoordinates.length - 1] + cardWidth / 2}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    zIndex: 1,
-                    strokeWidth: 2,
-                    pointerEvents: 'none',
-                    overflow: 'hidden'
-                }}
-            >
-                <defs>
-                    <clipPath id="clip">
-                        <rect x="0" y="0" width="90%" height="200" />
-                    </clipPath>
-                </defs>
 
-                <polyline
-                    points={xCoordinates.map((x, index) => `${x},${235 - (maxTemps[index] * 2)}`).join(' ')}
-                    style={{
-                        fill: 'none', stroke: 'red', strokeWidth: 2, clipPath: 'url(#clip)', overflow: 'hidden'
-                    }}
-                />
-                <polyline
-                    points={xCoordinates.map((x, index) => `${x},${227 - (minTemps[index] * 2)}`).join(' ')}
-                    style={{
-                        fill: 'none', stroke: 'blue', strokeWidth: 2, clipPath: 'url(#clip)', overflow: 'hidden'
-                    }}
-                />
-            </svg>
 
             <Box
                 sx={{
@@ -98,9 +53,9 @@ function WeeklyData({ selectedLocation }) {
                     overflowX: 'auto',
                     gap: 1,
                     padding: 1,
-                    border: 1,
+                    border: '1px solid #ccc',
                     borderRadius: 2,
-                    margin: 1,
+                    margin: { xs: 2, md: 5 },
                     scrollBehavior: 'smooth',
                     position: 'relative',
                 }}

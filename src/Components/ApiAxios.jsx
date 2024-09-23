@@ -55,30 +55,7 @@ function ApiAxios({ selectedLocation }) {
                         </CardContent>
                     </Box>
 
-                    {/* <Box sx={{ minWidth: 275 }}>
-                        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
-                            10-Day Forecast
-                        </Typography>
-                        {forecast.forecast.forecastday.map((day, index) => (
-                            <Card key={index} variant="outlined" sx={{ marginBottom: 1 }}>
-                                <CardContent>
-                                    <Typography gutterBottom sx={{ fontSize: 15 }}>
-                                        {day.date}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Max Temp: {Math.round(day.day.maxtemp_c)}°C
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Min Temp: {Math.round(day.day.mintemp_c)}°C
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Condition: {day.day.condition.text}
-                                        <img src={day.day.condition.icon} alt="Weather Icon" />
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </Box> */}
+                    
                 </>
             ) : (
                 <p>No weather data available.</p>
