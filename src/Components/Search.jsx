@@ -18,8 +18,8 @@ function Search({ setSelectedLocation }) {
         axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`)
             .then((res) => {
                 setSelectedLocation(location);
-                setSearchText(''); // Clear the search input
-                setSuggestedLocations([]); // Clear suggestions
+                setSearchText(''); 
+                setSuggestedLocations([]);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -58,15 +58,15 @@ function Search({ setSelectedLocation }) {
                         display: 'flex',
                         justifyContent: 'center',
                         ml: 0,
-                        bgcolor: 'white',
                         position: 'relative',
-                        marginTop:2
+                        marginTop: 2,
+                        zIndex: 50,
                     }}
                 >
                     <IconButton color="black">
                         <SearchIcon />
                     </IconButton>
-                    <input
+                    <input 
                         type="text"
                         placeholder="Search for a location..."
                         value={searchText}
@@ -77,7 +77,8 @@ function Search({ setSelectedLocation }) {
                             width: '100%',
                             padding: '8px',
                             boxSizing: 'border-box',
-                            borderRadius:20
+                            borderRadius: 20,
+                            color: 'black',
                         }}
                     />
                 </Box>
@@ -87,14 +88,12 @@ function Search({ setSelectedLocation }) {
                         sx={{
                             width: { xs: 280, sm: 500, lg: 600 },
                             margin: '0 auto',
-                            bgcolor: 'white',
                             borderRadius: 2,
                             zIndex: 1,
                             boxShadow: 1,
                             position: 'absolute',
-
+                            color: 'black',
                             top: '100%',
-
                         }}
                     >
                         {suggestedLocations.map((location, index) => (
@@ -102,6 +101,7 @@ function Search({ setSelectedLocation }) {
                                 button
                                 key={index}
                                 onClick={() => fetchWeatherForLocation(location.name)}
+                                style={{ color: 'black' }}
                             >
                                 <ListItemText primary={location.name} />
                             </ListItem>
