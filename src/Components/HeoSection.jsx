@@ -88,7 +88,7 @@ function ApiAxios({ selectedLocation }) {
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Box sx={{ paddingRight: 3, marginLeft: 2 }}>
                                 <Typography component="div" sx={{ display: 'flex', justifyContent: 'normal', fontSize: 60, fontWeight: '500', mb: '-16px' }}>
-                                    {Math.round(weather.current.temp_c)}<span style={{ fontSize: 30, marginTop: 10, color: 'hwb(180 96% 3% / 0.89)' }}>°C</span>
+                                    {Math.round(weather.current.temp_c)}<span style={{ fontSize: 30, marginTop: 10 }}>°C</span>
                                 </Typography>
                                 <Typography variant="body2" sx={{ textAlign: 'start', fontSize: 18 }}>
                                     {weather.current.condition.text}

@@ -38,8 +38,8 @@ function MoreData({ selectedLocation }) {
     if (!weatherData) return <Typography>Loading...</Typography>;
 
     return (
-        <Box sx={{ m: { xs: 2, md: 5 } }}>
-            <Typography variant="h6">HELPFUL INFO</Typography>
+        <Box sx={{ m: { xs: 2, md: 5 }}}>
+            <Typography variant="h6">Helpful Info</Typography>
             <Box
                 sx={{
                     padding: 2,
@@ -47,8 +47,10 @@ function MoreData({ selectedLocation }) {
                     borderRadius: '8px',
                     backgroundColor: '#f9f9f9',
                     display: 'grid',
-                    gridTemplateColumns: { xs: 'repeat(4, 1fr)', md: '1fr' },
+                    gridTemplateColumns: { xs: 'repeat(4, 1fr)', md: 'repeat(5, 1fr)' },
                     gap: 2,
+                    color:'black',
+                    margingBottom:5
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
@@ -98,7 +100,6 @@ function MoreData({ selectedLocation }) {
                     <MultilineChartOutlinedIcon />
                     <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Altitude</Typography>
                     <Typography>{`${weatherData.altitude || 'N/A'} m`}</Typography>
-
                 </Box>
             </Box>
         </Box>
