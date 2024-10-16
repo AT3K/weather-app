@@ -78,15 +78,14 @@ function ApiAxios({ selectedLocation }) {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
             {error && <p>{error}</p>}
             {weather && forecast ? (
-                <Box >
-                    <CardContent >
-                        <Box sx={{ display: 'flex', justifyContent: 'start', marginLeft: 2}}>
-                                <Typography gutterBottom sx={{ fontSize: 18 }}>
-                                    {weather.location.name} <LocationOnIcon sx={{ fontSize: 18 }} />
-                                </Typography>
-                            </Box>
+                <Box>
+                    <CardContent>
+                        <Box sx={{ display: 'flex', justifyContent: 'start', marginLeft: 2 }}>
+                            <Typography gutterBottom sx={{ fontSize: 18 }}>
+                                {weather.location.name} <LocationOnIcon sx={{ fontSize: 18 }} />
+                            </Typography>
+                        </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            
                             <Box sx={{ paddingRight: 3, marginLeft: 2 }}>
                                 <Typography component="div" sx={{ display: 'flex', justifyContent: 'normal', fontSize: 60, fontWeight: '500', mb: '-16px' }}>
                                     {Math.round(weather.current.temp_c)}<span style={{ fontSize: 30, marginTop: 10, color: 'hwb(180 96% 3% / 0.89)' }}>°C</span>
@@ -95,22 +94,16 @@ function ApiAxios({ selectedLocation }) {
                                     {weather.current.condition.text}
                                 </Typography>
                             </Box>
-                            <Box sx={{ width: 230, paddingLeft: 2,marginTop:'-50px' }}>
-
-                                <img
-                                    src={weatherIcon(weather.current.condition.text)}
-                                    alt={weather.current.condition.text}
-                                    style={{ marginTop: 20 }}
-                                />
+                            <Box sx={{ width: 230, paddingLeft: 2, marginTop: { xs: '-50px', md: '-70px' } }}>
+                                <img src={weatherIcon(weather.current.condition.text)} alt={weather.current.condition.text} style={{ marginTop: 20 }} />
                             </Box>
                         </Box>
                     </CardContent>
                 </Box>
-            ) : (
-                <p>No weather data available.</p>
-            )}
+            ) : null}
         </div>
     );
+    
 }
 
 export default ApiAxios;

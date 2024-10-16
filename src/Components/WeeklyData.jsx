@@ -16,7 +16,7 @@ function WeeklyData({ selectedLocation }) {
         axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7`)
             .then((response) => {
                 setForecast(response.data);
-                console.log('7 days:', response.data);
+                // console.log('7 days:', response.data);
             })
             .catch((err) => {
                 setError('Error fetching weather data');
@@ -40,10 +40,16 @@ function WeeklyData({ selectedLocation }) {
         const scrollPosition = scrollableRef.current.scrollLeft;
     };
 
+    if (error) {
+        return <p>{error}</p>;
+    }
+    
+    if (!forecast) {
+        return null;
+    }
+    
     return (
         <div style={{ position: 'relative', overflow: 'hidden' }}>
-
-
             <Box
                 sx={{
                     minWidth: 275,
@@ -65,28 +71,20 @@ function WeeklyData({ selectedLocation }) {
                 {forecast.forecast.forecastday.map((day, index) => (
                     <Box key={index} sx={{ minWidth: 150 }}>
                         <CardContent sx={{ textAlign: 'center' }}>
-                            <Typography gutterBottom sx={{ fontSize: 15 }}>
-                                {getDayOfWeek(day.date)}
-                            </Typography>
+                            <Typography gutterBottom sx={{ fontSize: 15 }}>{getDayOfWeek(day.date)}</Typography>
                             <Typography variant="body2" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img
-                                    src={day.day.condition.icon}
-                                    alt="Weather Icon"
-                                    style={{ width: 60, height: 60 }}
-                                />
+                                <img src={day.day.condition.icon} alt="Weather Icon" style={{ width: 60, height: 60 }} />
                             </Typography>
-                            <Typography variant="body2">
-                                Max: {Math.round(day.day.maxtemp_c)}°C
-                            </Typography>
-                            <Typography variant="body2" sx={{ marginTop: 4 }}>
-                                Min: {Math.round(day.day.mintemp_c)}°C
-                            </Typography>
+                            <Typography variant="body2">Max: {Math.round(day.day.maxtemp_c)}°C</Typography>
+                            <Typography variant="body2" sx={{ marginTop: 4 }}>Min: {Math.round(day.day.mintemp_c)}°C</Typography>
                         </CardContent>
                     </Box>
                 ))}
             </Box>
         </div>
     );
+    
+    
 }
 
 export default WeeklyData;
