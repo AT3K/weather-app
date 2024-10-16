@@ -48,14 +48,14 @@ function ApiAxios({ selectedLocation }) {
             axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`),
             axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=10`),
         ])
-        .then(axios.spread((currentRes, forecastRes) => {
-            setWeather(currentRes.data);
-            setForecast(forecastRes.data);
-        }))
-        .catch((err) => {
-            setError('Error fetching weather data');
-            console.error(err);
-        });
+            .then(axios.spread((currentRes, forecastRes) => {
+                setWeather(currentRes.data);
+                setForecast(forecastRes.data);
+            }))
+            .catch((err) => {
+                setError('Error fetching weather data');
+                console.error(err);
+            });
     }, [selectedLocation]);
 
     const weatherIcon = (condition) => {
@@ -78,13 +78,16 @@ function ApiAxios({ selectedLocation }) {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
             {error && <p>{error}</p>}
             {weather && forecast ? (
-                <Box sx={{ marginLeft:3 }}>
-                    <CardContent>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Box>
-                                <Typography gutterBottom sx={{ fontSize: 20 }}>
-                                    {weather.location.name} <LocationOnIcon sx={{ fontSize: 20 }} />
+                <Box >
+                    <CardContent >
+                        <Box sx={{ display: 'flex', justifyContent: 'start', marginLeft: 2}}>
+                                <Typography gutterBottom sx={{ fontSize: 18 }}>
+                                    {weather.location.name} <LocationOnIcon sx={{ fontSize: 18 }} />
                                 </Typography>
+                            </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            
+                            <Box sx={{ paddingRight: 3, marginLeft: 2 }}>
                                 <Typography component="div" sx={{ display: 'flex', justifyContent: 'normal', fontSize: 60, fontWeight: '500', mb: '-16px' }}>
                                     {Math.round(weather.current.temp_c)}<span style={{ fontSize: 30, marginTop: 10, color: 'hwb(180 96% 3% / 0.89)' }}>°C</span>
                                 </Typography>
@@ -92,9 +95,10 @@ function ApiAxios({ selectedLocation }) {
                                     {weather.current.condition.text}
                                 </Typography>
                             </Box>
-                            <Box sx={{ width: 250, paddingLeft: 5 }}>
+                            <Box sx={{ width: 230, paddingLeft: 2,marginTop:'-50px' }}>
+
                                 <img
-                                    src={weatherIcon(weather.current.condition.text) || ''}
+                                    src={weatherIcon(weather.current.condition.text)}
                                     alt={weather.current.condition.text}
                                     style={{ marginTop: 20 }}
                                 />

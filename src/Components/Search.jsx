@@ -61,6 +61,8 @@ function Search({ setSelectedLocation }) {
                         position: 'relative',
                         marginTop: 2,
                         zIndex: 50,
+                        backgroundColor:'white',
+
                     }}
                 >
                     <IconButton color="black">
@@ -86,7 +88,7 @@ function Search({ setSelectedLocation }) {
                 {suggestedLocations.length > 0 && (
                     <List
                         sx={{
-                            width: { xs: 280, sm: 500, lg: 600 },
+                            width: { xs: 340, sm: 500, lg: 600 },
                             margin: '0 auto',
                             borderRadius: 2,
                             zIndex: 1,
@@ -94,6 +96,10 @@ function Search({ setSelectedLocation }) {
                             position: 'absolute',
                             color: 'black',
                             top: '100%',
+                            backgroundColor:'white',
+                            marginTop:1
+   
+
                         }}
                     >
                         {suggestedLocations.map((location, index) => (
