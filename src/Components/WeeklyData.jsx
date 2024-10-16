@@ -67,8 +67,9 @@ function WeeklyData({ selectedLocation }) {
         }
         return forecastDate.toLocaleDateString('en-US', { weekday: 'long' });
     };
-
-
+    if (!forecast) {
+        return <p>Loading weather data...</p>;
+    }
 
     const handleScroll = () => {
         const scrollPosition = scrollableRef.current.scrollLeft;
