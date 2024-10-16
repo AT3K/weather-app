@@ -94,7 +94,7 @@ function ApiAxios({ selectedLocation }) {
                                     {weather.current.condition.text}
                                 </Typography>
                             </Box>
-                            <Box sx={{ width: 230, paddingLeft: 2, marginTop: { xs: '-50px', md: '-70px' } }}>
+                            <Box sx={{ width:{xs:200, md:230}, paddingLeft: 2, marginTop: { xs: '-60px', md: '-70px' } }}>
                                 <img src={weatherIcon(weather.current.condition.text)} alt={weather.current.condition.text} style={{ marginTop: 20 }} />
                             </Box>
                         </Box>
