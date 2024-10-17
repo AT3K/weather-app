@@ -15,9 +15,9 @@ function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // 2-second delay
+    }, 2000); 
 
-    return () => clearTimeout(timer); // Cleanup the timer when the component unmounts
+    return () => clearTimeout(timer); 
   }, []);
 
   return (
