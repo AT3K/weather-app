@@ -38,7 +38,6 @@ const weatherIcons = {
 function ApiAxios({ selectedLocation }) {
     const [weather, setWeather] = useState(null);
     const [forecast, setForecast] = useState(null);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const apiKey = '097eeeb342d8477aa69224048240209';
@@ -53,7 +52,6 @@ function ApiAxios({ selectedLocation }) {
                 setForecast(forecastRes.data);
             }))
             .catch((err) => {
-                setError('Error fetching weather data');
                 console.error(err);
             });
     }, [selectedLocation]);
@@ -75,9 +73,8 @@ function ApiAxios({ selectedLocation }) {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-            {error && <p>{error}</p>}
-            {weather && forecast ? (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20}}>
+            {weather && forecast && (
                 <Box>
                     <CardContent>
                         <Box sx={{ display: 'flex', justifyContent: 'start', marginLeft: 2 }}>
@@ -100,10 +97,9 @@ function ApiAxios({ selectedLocation }) {
                         </Box>
                     </CardContent>
                 </Box>
-            ) : null}
+            )}
         </div>
     );
-    
 }
 
 export default ApiAxios;

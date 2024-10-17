@@ -19,7 +19,6 @@ import thundery from '../assets/img/Thundery.png';
 
 function DailyData({ selectedLocation }) {
   const [forecast, setForecast] = useState(null);
-  const [error, setError] = useState(null);
   const scrollableRef = useRef(null);
 
   useEffect(() => {
@@ -29,10 +28,9 @@ function DailyData({ selectedLocation }) {
     axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1`)
       .then((forecastRes) => {
         setForecast(forecastRes.data);
-        console.log('1-Day Forecast:', forecastRes.data);
+        console.log('Forecast:', forecastRes.data);
       })
       .catch((err) => {
-        setError('Error fetching weather data');
         console.error(err);
       });
   }, [selectedLocation]);
@@ -72,44 +70,39 @@ function DailyData({ selectedLocation }) {
   };
 
   return (
-    <div style={{ position: 'relative', marginTop: 20 }}>
-        {error && <p>{error}</p>}
-        {forecast ? (
-            <Box
-                sx={{
-                    minWidth: 275,
-                    marginBottom: 2,
-                    display: 'flex',
-                    flexWrap: 'nowrap',
-                    overflowX: 'auto',
-                    gap: 1,
-                    padding: 1,
-                    borderRadius: 2,
-                    margin: { xs: 2, md: 5 },
-                    color: 'black',
-                    scrollBehavior: 'smooth'
-                }}
-                ref={scrollableRef}
-            >
-                {forecast.forecast.forecastday[0] &&
-                    forecast.forecast.forecastday[0].hour.map((hourData, index) => {
-                        const time24Hour = hourData.time.split(' ')[1];
-                        const dayOrNight = isDayOrNight(time24Hour);
-                        return (
-                            <Box key={index} sx={{ minWidth: 100, padding: 1, textAlign: 'center', bgcolor: 'whitesmoke', borderRadius: 5 }}>
-                                <Typography variant="body2">{convertTo12HourFormat(time24Hour)}</Typography>
-                                <Typography gutterBottom sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 1, height: 70 }}>
-                                    <img src={getWeatherIcon(hourData.condition.text, dayOrNight === 0)} alt={hourData.condition.text} style={{ width: 50, marginLeft: 5 }} />
-                                </Typography>
-                                <Typography variant="body2">{Math.round(hourData.temp_c)}°C</Typography>
-                            </Box>
-                        );
-                    })}
+    <div style={{ position: 'relative', marginTop: 20,height:{xs:100,md:200} }}>
+      <Box
+        sx={{
+          minWidth: 275,
+          marginBottom: 2,
+          display: 'flex',
+          flexWrap: 'nowrap',
+          overflowX: 'auto',
+          gap: 1,
+          padding: 1,
+          borderRadius: 2,
+          margin: { xs: 2, md: 5 },
+          color: 'black',
+          scrollBehavior: 'smooth'
+        }}
+        ref={scrollableRef}
+      >
+        {forecast?.forecast?.forecastday[0]?.hour.map((hourData, index) => {
+          const time24Hour = hourData.time.split(' ')[1];
+          const dayOrNight = isDayOrNight(time24Hour);
+          return (
+            <Box key={index} sx={{ minWidth: 100, padding: 1, textAlign: 'center', bgcolor: 'whitesmoke', borderRadius: 5 }}>
+              <Typography variant="body2">{convertTo12HourFormat(time24Hour)}</Typography>
+              <Typography gutterBottom sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 1, height: 70 }}>
+                <img src={getWeatherIcon(hourData.condition.text, dayOrNight === 0)} alt={hourData.condition.text} style={{ width: 50, marginLeft: 5 }} />
+              </Typography>
+              <Typography variant="body2">{Math.round(hourData.temp_c)}°C</Typography>
             </Box>
-        ) : null}
+          );
+        })}
+      </Box>
     </div>
-);
-
+  );
 }
 
 export default DailyData;

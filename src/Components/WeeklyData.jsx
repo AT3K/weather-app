@@ -20,20 +20,18 @@ import thundery from '../assets/img/Thundery.png';
 
 function WeeklyData({ selectedLocation }) {
     const [forecast, setForecast] = useState(null);
-    const [error, setError] = useState(null);
     const scrollableRef = useRef(null);
 
     useEffect(() => {
         const apiKey = '097eeeb342d8477aa69224048240209';
         const location = selectedLocation || 'iraq';
 
-        axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7`)
+        axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=10`)
             .then((response) => {
                 setForecast(response.data);
             })
             .catch((err) => {
-                setError('Error fetching weather data');
-                console.error(err);
+                console.error('Error fetching weather data', err);
             });
     }, [selectedLocation]);
 
@@ -52,27 +50,18 @@ function WeeklyData({ selectedLocation }) {
     };
 
     const getWeatherIcon = (conditionText) => {
-        const normalizedCondition = Object.keys(weatherIcon).find((key) =>
+        const key = Object.keys(weatherIcon).find((key) =>
             conditionText.toLowerCase().includes(key)
         );
-        return normalizedCondition ? weatherIcon[normalizedCondition].day : null;
+        return key ? weatherIcon[key].day : null;
     };
 
     const getDayOfWeek = (dateString) => {
         const today = new Date();
         const forecastDate = new Date(dateString);
-        const isToday = today.toDateString() === forecastDate.toDateString();
-        if (isToday) {
-            return 'Today';
-        }
-        return forecastDate.toLocaleDateString('en-US', { weekday: 'long' });
-    };
-    if (!forecast) {
-        return <p>Loading weather data...</p>;
-    }
-
-    const handleScroll = () => {
-        const scrollPosition = scrollableRef.current.scrollLeft;
+        return today.toDateString() === forecastDate.toDateString()
+            ? 'Today'
+            : forecastDate.toLocaleDateString('en-US', { weekday: 'long' });
     };
 
     return (
@@ -96,9 +85,8 @@ function WeeklyData({ selectedLocation }) {
                     color: 'black',
                 }}
                 ref={scrollableRef}
-                onScroll={handleScroll}
             >
-                {forecast.forecast.forecastday.map((day, index) => (
+                {forecast?.forecast.forecastday.map((day, index) => (
                     <Box key={index} sx={{ minWidth: 180, bgcolor: 'whitesmoke', borderRadius: 5 }}>
                         <CardContent sx={{ textAlign: 'start' }}>
                             <Typography gutterBottom sx={{ fontSize: 15 }}>{getDayOfWeek(day.date)}</Typography>

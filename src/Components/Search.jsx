@@ -6,7 +6,6 @@ import SearchIcon from '@mui/icons-material/Search';
 function Search({ setSelectedLocation }) {
     const [searchText, setSearchText] = useState('');
     const [suggestedLocations, setSuggestedLocations] = useState([]);
-    const [error, setError] = useState(null);
 
     const handleSearch = (value) => {
         setSearchText(value);
@@ -23,7 +22,6 @@ function Search({ setSelectedLocation }) {
                 console.log(res.data);
             })
             .catch((err) => {
-                setError('Error fetching weather data');
                 console.error(err);
             });
     };
@@ -37,7 +35,6 @@ function Search({ setSelectedLocation }) {
                     console.log('Suggestions:', res.data);
                 })
                 .catch((err) => {
-                    setError('Error fetching location suggestions');
                     console.error(err);
                 });
         } else {
@@ -116,7 +113,6 @@ function Search({ setSelectedLocation }) {
                 )}
             </Box>
 
-            {error && <p>{error}</p>}
         </div>
     );
 }
