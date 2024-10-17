@@ -17,24 +17,9 @@ import drizzleNight from '../assets/img/drizzleNight.png';
 import overcast from '../assets/img/Overcast.png';
 import fog from '../assets/img/fog.png';
 import mist from '../assets/img/mist.png';
+import thundery from '../assets/img/Thundery.png';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
-const weatherIcons = {
-    sunny,
-    clearlynight,
-    rain,
-    snow,
-    cloudy,
-    storm,
-    rainNight,
-    cloudyNight,
-    drizzle,
-    drizzleNight,
-    overcast,
-    fog,
-    mist,
-};
 
 function ApiAxios({ selectedLocation }) {
     const [weather, setWeather] = useState(null);
@@ -48,29 +33,34 @@ function ApiAxios({ selectedLocation }) {
             axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`),
             axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=10`),
         ])
-            .then(axios.spread((currentRes, forecastRes) => {
-                setWeather(currentRes.data);
-                setForecast(forecastRes.data);
-            }))
-            .catch((err) => {
-                console.error(err);
-            });
+        .then(axios.spread((currentRes, forecastRes) => {
+            setWeather(currentRes.data);
+            setForecast(forecastRes.data);
+        }))
+        .catch((err) => {
+            console.error(err);
+        });
     }, [selectedLocation]);
 
-    const weatherIcon = (condition) => {
-        const conditionKey = condition.toLowerCase();
-        if (conditionKey.includes('sunny')) return weatherIcons.sunny;
-        if (conditionKey.includes('clear')) return weatherIcons.clearlynight;
-        if (conditionKey.includes('rain')) return weatherIcons.rain;
-        if (conditionKey.includes('cloud')) return weatherIcons.cloudy;
-        if (conditionKey.includes('storm')) return weatherIcons.storm;
-        if (conditionKey.includes('night')) return weatherIcons.rainNight;
-        if (conditionKey.includes('snow')) return weatherIcons.snow;
-        if (conditionKey.includes('drizzle')) return weatherIcons.drizzle;
-        if (conditionKey.includes('overcast')) return weatherIcons.overcast;
-        if (conditionKey.includes('fog')) return weatherIcons.fog;
-        if (conditionKey.includes('mist')) return weatherIcons.mist;
-        return null;
+    const weatherIcons = {
+        sunny: { day: sunny, night: clearlynight },
+        clear: { day: sunny, night: clearlynight },
+        rain: { day: rain, night: rainNight },
+        cloud: { day: cloudy, night: cloudyNight },
+        snow: { day: snow, night: snow },
+        storm: { day: storm, night: storm },
+        drizzle: { day: drizzle, night: drizzleNight },
+        overcast: { day: overcast, night: overcast },
+        mist: { day: mist, night: mist },
+        fog: { day: fog, night: fog },
+        thundery: { day: thundery, night: thundery }
+    };
+
+    const getWeatherIcon = (conditionText, isDay) => {
+        const normalizedCondition = Object.keys(weatherIcons).find((key) =>
+          conditionText.toLowerCase().includes(key)
+        );
+        return normalizedCondition ? weatherIcons[normalizedCondition][isDay ? 'day' : 'night'] : null;
     };
 
     return (
@@ -88,13 +78,13 @@ function ApiAxios({ selectedLocation }) {
                                 <Typography component="div" sx={{ display: 'flex', justifyContent: 'normal', fontSize: 60, fontWeight: '500', mb: '-16px' }}>
                                     {Math.round(weather.current.temp_c)}<span style={{ fontSize: 30, marginTop: 10 }}>°C</span>
                                 </Typography>
-                                <Typography variant="body2" sx={{ textAlign: 'start', fontSize: 18 }}>
+                                <Typography variant="body2" sx={{ textAlign: 'start', fontSize: 15 }}>
                                     {weather.current.condition.text}
                                 </Typography>
                             </Box>
                             <Box sx={{ width: { xs: 200, md: 230 }, paddingLeft: 2, marginTop: { xs: '-60px', md: '-70px' } }}>
                                 <LazyLoadImage
-                                    src={weatherIcon(weather.current.condition.text)}
+                                    src={getWeatherIcon(weather.current.condition.text, weather.current.is_day === 1)}
                                     alt={weather.current.condition.text}
                                     style={{ marginTop: 20 }}
                                     effect='blur'
