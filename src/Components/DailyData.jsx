@@ -16,6 +16,8 @@ import Overcast from '../assets/img/Overcast.png';
 import fog from '../assets/img/fog.png';
 import mist from '../assets/img/mist.png';
 import thundery from '../assets/img/Thundery.png';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 function DailyData({ selectedLocation }) {
   const [forecast, setForecast] = useState(null);
@@ -94,7 +96,12 @@ function DailyData({ selectedLocation }) {
             <Box key={index} sx={{ minWidth: 100, padding: 1, textAlign: 'center', bgcolor: 'whitesmoke', borderRadius: 5 }}>
               <Typography variant="body2">{convertTo12HourFormat(time24Hour)}</Typography>
               <Typography gutterBottom sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 1, height: 70 }}>
-                <img src={getWeatherIcon(hourData.condition.text, dayOrNight === 0)} alt={hourData.condition.text} style={{ width: 50, marginLeft: 5 }} />
+              <LazyLoadImage
+                src={getWeatherIcon(hourData.condition.text, dayOrNight === 0)}
+                alt={hourData.condition.text}
+                effect='blur'
+                style={{ width: 50, height: 50 }}
+              />              
               </Typography>
               <Typography variant="body2">{Math.round(hourData.temp_c)}°C</Typography>
             </Box>

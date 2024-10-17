@@ -11,6 +11,8 @@ import barometer from '../assets/img/barometer.png';
 import cloud from '../assets/img/cloud-cover.png';
 import visibility from '../assets/img/visibilty.png';
 import altitude from '../assets/img/Altitude.png';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 function MoreData({ selectedLocation }) {
     const [weatherData, setWeatherData] = useState(null);
@@ -39,10 +41,11 @@ function MoreData({ selectedLocation }) {
 
     const getThermo = (temperature) => {
         return (
-            <img
+            <LazyLoadImage
                 src={temperature >= 28 ? hotthermo : coldthermo}
                 alt="Thermometer"
                 style={{ width: 50 }}
+                effect='blur'
             />
         );
     };
@@ -66,7 +69,12 @@ function MoreData({ selectedLocation }) {
                     >
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={humidity} style={{ width: 50 }} alt="Humidity" />
+                                <LazyLoadImage
+                                    src={humidity}
+                                    style={{ width: 50 }}
+                                    alt="Humidity"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Humidity</Typography>
                             <Typography>{`${weatherData.humidity}%`}</Typography>
@@ -82,7 +90,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={wind} style={{ width: 70 }} alt="Wind Speed" />
+                                <LazyLoadImage
+                                    src={wind}
+                                    style={{ width: 70 }}
+                                    alt="Wind Speed"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Wind Speed</Typography>
                             <Typography>{`${weatherData.wind_kph} kph`}</Typography>
@@ -90,7 +103,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={windDir} style={{ width: 50 }} alt="Wind Direction" />
+                                <LazyLoadImage
+                                    src={windDir}
+                                    style={{ width: 50 }}
+                                    alt="Wind Direction"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Wind Dir</Typography>
                             <Typography>{`${weatherData.wind_dir}`}</Typography>
@@ -98,7 +116,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={sun} style={{ width: 50 }} alt="UV Index" />
+                                <LazyLoadImage
+                                    src={sun}
+                                    style={{ width: 50 }}
+                                    alt="UV Index"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>UV Index</Typography>
                             <Typography>{getUvLevel(weatherData.uv)}</Typography>
@@ -106,7 +129,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={barometer} style={{ width: 50 }} alt="Pressure" />
+                                <LazyLoadImage
+                                    src={barometer}
+                                    style={{ width: 50 }}
+                                    alt="Pressure"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Pressure</Typography>
                             <Typography>{`${weatherData.pressure_mb} mb`}</Typography>
@@ -114,7 +142,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={cloud} style={{ width: 50 }} alt="Cloud Cover" />
+                                <LazyLoadImage
+                                    src={cloud}
+                                    style={{ width: 50 }}
+                                    alt="Cloud Cover"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Cloud Cover</Typography>
                             <Typography>{`${weatherData.cloud}%`}</Typography>
@@ -122,7 +155,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={visibility} style={{ width: 50 }} alt="Visibility" />
+                                <LazyLoadImage
+                                    src={visibility}
+                                    style={{ width: 50 }}
+                                    alt="Visibility"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Visibility</Typography>
                             <Typography>{`${weatherData.vis_km} km`}</Typography>
@@ -130,7 +168,12 @@ function MoreData({ selectedLocation }) {
 
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                             <Box sx={{ height: 50 }}>
-                                <img src={altitude} style={{ width: 50 }} alt="Altitude" />
+                                <LazyLoadImage
+                                    src={altitude}
+                                    style={{ width: 50 }}
+                                    alt="Altitude"
+                                    effect='blur'
+                                />
                             </Box>
                             <Typography sx={{ fontSize: { xs: 12, md: 20 } }}>Altitude</Typography>
                             <Typography>{`${weatherData.altitude || 'N/A'} m`}</Typography>

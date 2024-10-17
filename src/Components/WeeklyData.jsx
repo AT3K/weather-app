@@ -17,6 +17,8 @@ import Overcast from '../assets/img/Overcast.png';
 import fog from '../assets/img/fog.png';
 import mist from '../assets/img/mist.png';
 import thundery from '../assets/img/Thundery.png';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 function WeeklyData({ selectedLocation }) {
     const [forecast, setForecast] = useState(null);
@@ -92,7 +94,12 @@ function WeeklyData({ selectedLocation }) {
                             <Typography gutterBottom sx={{ fontSize: 15 }}>{getDayOfWeek(day.date)}</Typography>
                             <Box sx={{ display: 'flex', justifyContent: 'start' }}>
                                 <Typography variant="body2" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={getWeatherIcon(day.day.condition.text)} alt="Weather Icon" style={{ width: 60, height: 60 }} />
+                                    <LazyLoadImage
+                                        src={getWeatherIcon(day.day.condition.text)}
+                                        alt="Weather Icon"
+                                        effect='blur'
+                                        style={{ width: 50, height: 50 }}
+                                    />
                                 </Typography>
                                 <Box sx={{ paddingLeft: 2 }}>
                                     <Typography variant="body2">{Math.round(day.day.maxtemp_c)}°C</Typography>

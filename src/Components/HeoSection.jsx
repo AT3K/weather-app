@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
 import sunny from '../assets/img/sunny.png';
 import clearlynight from '../assets/img/clearlynight.png';
 import rain from '../assets/img/rain.png';
@@ -18,6 +17,8 @@ import drizzleNight from '../assets/img/drizzleNight.png';
 import overcast from '../assets/img/Overcast.png';
 import fog from '../assets/img/fog.png';
 import mist from '../assets/img/mist.png';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const weatherIcons = {
     sunny,
@@ -73,7 +74,7 @@ function ApiAxios({ selectedLocation }) {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20}}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
             {weather && forecast && (
                 <Box>
                     <CardContent>
@@ -91,8 +92,13 @@ function ApiAxios({ selectedLocation }) {
                                     {weather.current.condition.text}
                                 </Typography>
                             </Box>
-                            <Box sx={{ width:{xs:200, md:230}, paddingLeft: 2, marginTop: { xs: '-60px', md: '-70px' } }}>
-                                <img src={weatherIcon(weather.current.condition.text)} alt={weather.current.condition.text} style={{ marginTop: 20 }} />
+                            <Box sx={{ width: { xs: 200, md: 230 }, paddingLeft: 2, marginTop: { xs: '-60px', md: '-70px' } }}>
+                                <LazyLoadImage
+                                    src={weatherIcon(weather.current.condition.text)}
+                                    alt={weather.current.condition.text}
+                                    style={{ marginTop: 20 }}
+                                    effect='blur'
+                                />
                             </Box>
                         </Box>
                     </CardContent>
